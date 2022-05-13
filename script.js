@@ -8,23 +8,32 @@ weatherPart = weatherData_main.querySelector(".weather-part"),
 wIcon = weatherPart.querySelector("img"),
 chartCanvas = document.querySelector(".myChartCanvas");
 
+//For Click event 
 inputFieldbtn.addEventListener("click", () =>{ 
     // if user pressed enter btn and input value is not empty
      requestApi(inputField.value);	
 });
 
+//If user use keyboard enter after adding city name
+inputField.addEventListener("keyup", e =>{
+    // if user pressed enter btn and input value is not empty
+    if(e.key == "Enter" && inputField.value != ""){
+        requestApi(inputField.value);
+    }
+});
+
+//to get the city related info using this function
 function requestApi(city){
    let api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=693e06fd3aa5f68582b3e1467f3ce19d`;
 	infoTxt.innerText = "Getting weather details...";
     infoTxt.classList.add("pending");
-    // getting api response and returning it with parsing into js obj and in another 
-    // then function calling weatherDetails function with passing api result as an argument
     fetch(api).then(res => res.json()).then(result => coOrdDetails(result)).catch(() =>{
         infoTxt.innerText = "Something went wrong";
         infoTxt.classList.replace("pending", "error");
     });
 }
 
+//to get Langitude and Latitude of the user when clicked on auto detect my location button
 function coOrdDetails(info){
 	if(info.cod == "404"){ // if user entered city name isn't valid
         infoTxt.classList.replace("pending", "error");
@@ -47,8 +56,10 @@ function displayWeatherInfo(latitude, longitude) {
     });
 }
 
+//Fetching the details to show the chart for 24hours forecast
 function fetchWeatherByLocation(lati, longi) {	
-	fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lati}&lon=${longi}&appid=693e06fd3aa5f68582b3e1467f3ce19d`)
+	api =`https://api.openweathermap.org/data/2.5/onecall?lat=${lati}&lon=${longi}&appid=693e06fd3aa5f68582b3e1467f3ce19d`;
+	fetch(api)
 		  .then((data) => data.json()).then((loadedData) => {  
 		
 			let dts = loadedData.hourly.map((valuesData) => {	
@@ -110,6 +121,7 @@ function fetchWeatherByLocation(lati, longi) {
 		  });
 }
 
+//When user clicked on auto detect my location button
 locationBtn.addEventListener("click", () =>{
     if(navigator.geolocation){ // if browser support geolocation api
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
@@ -130,6 +142,7 @@ function onError(error){
     infoTxt.classList.add("error");
 }
 
+//to show all the details in html after fetching the data
 function weatherDetails(info){
     if(info.cod == "404"){ // if user entered city name isn't valid
         infoTxt.classList.replace("pending", "error");
