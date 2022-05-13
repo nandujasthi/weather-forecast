@@ -27,6 +27,6 @@ Before starting you need to get yourself an API key to make queries in the [open
 
 * Used Chart.js to show the 24 hours forecast in hours/temparature format
 
-* Open Weather API is used to fetch the weather information based on City or location
+* [Open Weather API](http://openweathermap.org/) is used to fetch the weather information based on City or location
 
  
