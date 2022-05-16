@@ -26,7 +26,7 @@ inputField.addEventListener("keyup", e =>{
 
 //to get the city related info using this function
 function requestApi(city){
-   let api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=693e06fd3aa5f68582b3e1467f3ce19d`;
+   api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=693e06fd3aa5f68582b3e1467f3ce19d`;
 	infoTxt.innerText = "Getting weather details...";
     infoTxt.classList.add("pending");
     fetch(api).then(res => res.json()).then(result => coOrdDetails(result)).catch(() =>{
