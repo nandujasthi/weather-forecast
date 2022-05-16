@@ -8,6 +8,8 @@ weatherPart = weatherData_main.querySelector(".weather-part"),
 wIcon = weatherPart.querySelector("img"),
 chartCanvas = document.querySelector(".myChartCanvas");
 
+let api;
+
 //For Click event 
 inputFieldbtn.addEventListener("click", () =>{ 
     // if user pressed enter btn and input value is not empty
